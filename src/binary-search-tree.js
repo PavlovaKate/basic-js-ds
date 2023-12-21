@@ -8,11 +8,12 @@ const { Node } = require('../extensions/list-tree.js');
 */
 class BinarySearchTree {
   constructor(data) {
-    this.root = new Node(data);
+    // this.rot = new Node(data);
+    this.rot = null;
   }
 
   root() {
-   return this.root;
+   return this.rot;
   }
 
   add(data) {
@@ -36,7 +37,7 @@ class BinarySearchTree {
 
     // searchTree(this.root);
 
-    this.root = addWithin(this.root, data);
+    this.rot = addWithin(this.rot, data);
 
     function addWithin(node, data) {
       if (!node) {
@@ -58,7 +59,7 @@ class BinarySearchTree {
   }
 
   has(data) {
-    return searchWithin(this.root, data);
+    return searchWithin(this.rot, data);
 
     function searchWithin(node, data) {
       if (!node) {
@@ -74,7 +75,7 @@ class BinarySearchTree {
   }
 
   find(data) {
-    return findWithin(this.root, data);
+    return findWithin(this.rot, data);
 
     function findWithin(node, data) {
       if (!node) {
@@ -82,7 +83,7 @@ class BinarySearchTree {
       }
 
       if (node.data === data) {
-        return node.data;
+        return node;
       }
 
       return data < node.data ? findWithin(node.left, data) : findWithin(node.right, data);
@@ -90,7 +91,7 @@ class BinarySearchTree {
   }
 
   remove(data) {
-    this.root = removeNode(this.root, data);
+    this.rot = removeNode(this.rot, data);
 
     function removeNode(node, data) {
       if (!node) {
@@ -99,6 +100,9 @@ class BinarySearchTree {
 
       if (data < node.data) {
         node.left = removeNode(node.left, data);
+        return node;
+      } else if (node.data < data) {
+        node.right = removeNode(node.right, data);
         return node;
       } else {
         if (!node.left && !node.right) {
@@ -129,11 +133,12 @@ class BinarySearchTree {
   }
 
   min() {
-    if (!this.root) {
+    if (!this.rot) {
       return;
     }
 
-    let node = this.root;
+    // this.rot = new Node(data);
+    let node = this.rot;
     while (node.left) {
       node = node.left;
     }
@@ -142,11 +147,11 @@ class BinarySearchTree {
   }
 
   max() {
-    if (!this.root) {
+    if (!this.rot) {
       return;
     }
 
-    let node = this.root;
+    let node = this.rot;
     while (node.right) {
       node = node.right;
     }
@@ -155,7 +160,7 @@ class BinarySearchTree {
   }
 }
 
-const bst = new BinarySearchTree();
+const tree = new BinarySearchTree();
 
 module.exports = {
   BinarySearchTree
